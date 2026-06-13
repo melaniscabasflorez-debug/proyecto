@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detectives de Historias con IA</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background-color:#f4f6f9;
+        margin:0;
+        padding:20px;
+        color:#333;
+    }
+
+    .container{
+        max-width:900px;
+        margin:auto;
+        background:white;
+        padding:30px;
+        border-radius:15px;
+        box-shadow:0 0 10px rgba(0,0,0,.1);
+    }
+
+    h1,h2{
+        color:#1565c0;
+    }
+
+    .cuento{
+        background:#fff8e1;
+        padding:15px;
+        border-left:5px solid #ffb300;
+        border-radius:10px;
+        margin-bottom:20px;
+    }
+
+    button{
+        background:#1565c0;
+        color:white;
+        border:none;
+        padding:12px 20px;
+        border-radius:8px;
+        cursor:pointer;
+        margin:10px 0;
+    }
+
+    button:hover{
+        background:#0d47a1;
+    }
+
+    .pregunta{
+        margin-bottom:20px;
+        padding:15px;
+        background:#f1f8ff;
+        border-radius:10px;
+    }
+
+    textarea{
+        width:100%;
+        min-height:80px;
+        padding:10px;
+        border-radius:8px;
+        border:1px solid #ccc;
+    }
+
+    .resultado{
+        margin-top:20px;
+        padding:20px;
+        background:#e8f5e9;
+        border-radius:10px;
+        display:none;
+    }
+
+    .ia{
+        background:#ede7f6;
+        padding:15px;
+        border-radius:10px;
+        margin-top:20px;
+    }
+
+    .finales{
+        margin-top:20px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>📚 Detectives de Historias con IA</h1>
+
+    <p><strong>Objetivo:</strong> Fortalecer la comprensión lectora mediante actividades apoyadas por Inteligencia Artificial.</p>
+
+    <div class="cuento">
+        <h2>Cuento: El colibrí valiente</h2>
+
+        <p>
+        En un bosque muy lejano comenzó un incendio. Todos los animales huyeron asustados,
+        excepto un pequeño colibrí que iba una y otra vez al río para llevar gotas de agua en su pico
+        y lanzarlas sobre el fuego.
+
+        Un jaguar lo observó y le preguntó:
+
+        —¿Por qué haces eso? Nunca apagarás el incendio.
+
+        El colibrí respondió:
+
+        —Tal vez no pueda apagarlo solo, pero estoy haciendo mi parte.
+
+        Al escuchar sus palabras, los demás animales decidieron ayudar y, trabajando juntos,
+        lograron controlar el incendio.
+        </p>
+    </div>
+
+    <button onclick="mostrarPreguntas()">Comenzar actividad</button>
+
+    <div id="actividad" style="display:none">
+
+        <h2>🔍 Preguntas de comprensión</h2>
+
+        <div class="pregunta">
+            <p>1. ¿Qué problema ocurrió en el bosque?</p>
+            <textarea id="p1"></textarea>
+        </div>
+
+        <div class="pregunta">
+            <p>2. ¿Qué hacía el colibrí para ayudar?</p>
+            <textarea id="p2"></textarea>
+        </div>
+
+        <div class="pregunta">
+            <p>3. ¿Por qué el jaguar pensaba que el colibrí no tendría éxito?</p>
+            <textarea id="p3"></textarea>
+        </div>
+
+        <div class="pregunta">
+            <p>4. ¿Qué enseñanza te deja esta historia?</p>
+            <textarea id="p4"></textarea>
+        </div>
+
+        <div class="pregunta">
+            <p>5. Si hubieras estado en el bosque, ¿qué habrías hecho?</p>
+            <textarea id="p5"></textarea>
+        </div>
+
+        <button onclick="evaluar()">Enviar respuestas</button>
+
+    </div>
+
+    <div class="resultado" id="resultado">
+        <h2>🎉 ¡Excelente trabajo!</h2>
+
+        <p id="puntaje"></p>
+
+        <div class="ia">
+            <h3>🤖 Actividad con Inteligencia Artificial</h3>
+
+            <p>
+            Imagina que eres una IA educativa. Escribe un final diferente para el cuento:
+            </p>
+
+            <textarea id="nuevoFinal" placeholder="Escribe aquí tu nuevo final..."></textarea>
+
+            <button onclick="mostrarFinal()">Crear mi final</button>
+
+            <div class="finales" id="finales"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function mostrarPreguntas(){
+    document.getElementById("actividad").style.display = "block";
+}
+
+function evaluar(){
+
+    let puntos = 0;
+
+    if(document.getElementById("p1").value.length > 10) puntos++;
+    if(document.getElementById("p2").value.length > 10) puntos++;
+    if(document.getElementById("p3").value.length > 10) puntos++;
+    if(document.getElementById("p4").value.length > 10) puntos++;
+    if(document.getElementById("p5").value.length > 10) puntos++;
+
+    document.getElementById("resultado").style.display = "block";
+
+    document.getElementById("puntaje").innerHTML =
+        "Has respondido correctamente las actividades. Participación registrada: "
+        + puntos + " de 5 respuestas desarrolladas.";
+
+    window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+    });
+
+}
+
+function mostrarFinal(){
+
+    let finalUsuario = document.getElementById("nuevoFinal").value;
+
+    if(finalUsuario.trim() === ""){
+        alert("Por favor escribe un nuevo final.");
+        return;
+    }
+
+    document.getElementById("finales").innerHTML = `
+        <h3>🌟 Tu versión del cuento</h3>
+        <p>${finalUsuario}</p>
+
+        <h3>🤖 Ejemplo generado con IA</h3>
+
+        <p>
+        Los animales comprendieron que incluso las acciones pequeñas pueden generar grandes cambios.
+        Desde ese día organizaron brigadas para proteger el bosque y enseñaron a sus crías la importancia
+        del trabajo en equipo y del cuidado del medio ambiente.
+        </p>
+
+        <h3>💭 Reflexiona</h3>
+
+        <ul>
+            <li>¿Cuál final te gustó más?</li>
+            <li>¿Qué valores identificaste en la historia?</li>
+            <li>¿Cómo puedes aplicar esta enseñanza en tu vida diaria?</li>
+        </ul>
+    `;
+
+}
+
+</script>
+
+</body>
+</html>
